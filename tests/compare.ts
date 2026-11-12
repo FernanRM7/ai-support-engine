@@ -10,6 +10,7 @@ const rows: Array<Record<string, unknown>> = []
 for (const testCase of cases) {
   for (const mode of ['traditional', 'generative'] as const) {
     let result: unknown
+    let httpStatus: number | null = null
     let validFormat = false
     try {
       const response = await fetch(`${baseUrl}/api/analyze`, {
@@ -17,6 +18,7 @@ for (const testCase of cases) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: testCase.message, mode }),
       })
+      httpStatus = response.status
       result = await response.json()
       validFormat = response.ok && analysisSchema.safeParse(result).success
     } catch (error) {
@@ -28,6 +30,7 @@ for (const testCase of cases) {
       mode,
       expectedCategory: testCase.category,
       expectedPriority: testCase.priority,
+      httpStatus,
       category: data.success ? data.data.category : null,
       priority: data.success ? data.data.priority : null,
       validFormat,

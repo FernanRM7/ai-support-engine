@@ -1,11 +1,11 @@
 import { Hono } from 'hono'
 import { ZodError } from 'zod'
 import { analysisSchema, requestSchema } from './contract'
-import { analyzeGenerative } from './generative'
+import { analyzeGenerative, GenerativeOutputError, type AiBinding } from './generative'
 import { analyzeTraditional } from './traditional'
 
 interface Bindings {
-  AI: { run: (model: string, input: { messages: Array<{ role: 'system' | 'user'; content: string }> }, options?: { gateway?: { id: string } }) => Promise<unknown> }
+  AI: AiBinding
   AI_GATEWAY_ID: string
   AI_MODEL: string
 }
@@ -29,7 +29,11 @@ app.post('/api/analyze', async (c) => {
     const response = analysisSchema.parse(result)
     return c.json(response)
   } catch (error) {
-    const message = error instanceof ZodError ? 'El proveedor devolvió una salida con formato inválido' : 'No fue posible completar el análisis generativo'
+    const reason = error instanceof GenerativeOutputError ? error.reason : error instanceof ZodError ? 'invalid_response_contract' : 'provider_error'
+    console.error(JSON.stringify({ event: 'generative_analysis_failed', reason }))
+    const message = error instanceof GenerativeOutputError || error instanceof ZodError
+      ? 'El proveedor devolvió una salida con formato inválido'
+      : 'No fue posible completar el análisis generativo'
     return c.json({ error: message }, 502)
   }
 })
