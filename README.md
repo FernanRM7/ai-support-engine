@@ -1,0 +1,76 @@
+# AI Support Engine
+
+API de clasificación de solicitudes de soporte con dos modos: reglas determinísticas (`traditional`) y análisis generativo con Workers AI a través de Cloudflare AI Gateway (`generative`).
+
+## Fases del reto
+
+1. Contrato y validación: Zod valida entrada y salida común.
+2. Motor tradicional: reglas, prioridad, respuesta predeterminada y precedencia de seguridad.
+3. API: `POST /api/analyze`, errores controlados y endpoint `/health`.
+4. Motor generativo: invocación real del modelo enlazado al Worker, salida JSON validada y elevación de revisión humana para `SECURITY`.
+5. Evaluación: dataset de 12 casos con ambigüedad e intentos de prompt injection.
+6. Publicación y demo: completar autenticación de Cloudflare, ejecutar comparación live y publicar.
+
+## Requisitos
+
+Node.js 22+ y npm. Para análisis generativo se necesita una cuenta Cloudflare con Workers AI habilitado. La cuenta debe disponer del binding AI y Gateway configurados; no se guardan credenciales en el código.
+
+## Ejecutar localmente
+
+```sh
+npm install
+npm run dev
+```
+
+Prueba tradicional:
+
+```sh
+curl -s http://localhost:8787/api/analyze \
+  -H 'content-type: application/json' \
+  -d '{"message":"No puedo iniciar sesión","mode":"traditional"}'
+```
+
+Prueba generativa (requiere autenticación de Wrangler y configuración del Gateway):
+
+```sh
+npx wrangler login
+curl -s http://localhost:8787/api/analyze \
+  -H 'content-type: application/json' \
+  -d '{"message":"No puedo iniciar sesión","mode":"generative"}'
+```
+
+Ambos modos devuelven `category`, `priority`, `response`, `requiresHumanReview` y `mode`. La entrada acepta mensajes de 1 a 4000 caracteres. `SECURITY` siempre activa revisión humana. Los fallos de proveedor o del formato del modelo responden HTTP 502; el detalle interno no se devuelve.
+
+## Pruebas y comparación
+
+```sh
+npm test
+npm run typecheck
+```
+
+Con el servidor local funcionando y autenticado para AI:
+
+```sh
+npm run compare
+```
+
+El comparador consulta ambos modos sobre los mismos 12 casos definidos previamente en `tests/dataset.json`, valida el contrato y genera `evidence/comparison.json` (ignorado por Git para no publicar resultados no verificados). También imprime porcentaje de aciertos por motor. Define otra URL con `API_BASE_URL` si hace falta.
+
+## Límites y costos
+
+AI Gateway está disponible en todos los planes, pero no convierte la inferencia en ilimitada ni necesariamente gratuita. Workers Free permite 100.000 solicitudes de Worker por día y 10 ms de CPU por invocación. Workers AI publica una asignación gratuita de 10.000 Neurons diarios; al excederla, la documentación indica que hace falta Workers Paid. El costo y los límites dependen del modelo. Unified Billing usa créditos prepagados (con 5% de cargo al comprar créditos). Verifica la facturación del modelo y el Gateway en el dashboard antes de ejecutar lotes.
+
+La llamada a inferencia es una subrequest y la espera externa no consume CPU activa del Worker; límites de modelo y cuenta siguen aplicando. Consulta las fuentes oficiales enlazadas abajo.
+
+## Referencias oficiales
+
+- [Hono en Cloudflare Workers](https://hono.dev/docs/getting-started/cloudflare-workers)
+- [AI Gateway](https://developers.cloudflare.com/ai-gateway/)
+- [AI Gateway: inicio rápido](https://developers.cloudflare.com/ai-gateway/get-started/)
+- [Workers AI: precios y cuota gratuita](https://developers.cloudflare.com/workers-ai/platform/pricing/)
+- [Workers: precios y límites del plan Free](https://developers.cloudflare.com/workers/platform/pricing/)
+- [AI Gateway: Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/)
+
+## Nota sobre métricas
+
+La clasificación de referencia es una convención definida para este ejercicio. Accuracy exige coincidencia de categoría **y** prioridad. Una ejecución generativa requiere conexión real con el modelo; no se incluyen respuestas generativas pregrabadas.
