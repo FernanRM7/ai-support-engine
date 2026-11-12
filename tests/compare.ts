@@ -26,6 +26,8 @@ for (const testCase of cases) {
     rows.push({
       id: testCase.id,
       mode,
+      expectedCategory: testCase.category,
+      expectedPriority: testCase.priority,
       category: data.success ? data.data.category : null,
       priority: data.success ? data.data.priority : null,
       validFormat,

@@ -1,0 +1,259 @@
+{
+  "generatedAt": "2026-11-12T22:48:35.631Z",
+  "results": [
+    {
+      "id": "normal-access",
+      "mode": "traditional",
+      "category": "ACCESS",
+      "priority": "MEDIUM",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "ACCESS",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "normal-access",
+      "mode": "generative",
+      "category": "ACCESS",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "ACCESS",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "normal-bug",
+      "mode": "traditional",
+      "category": "BUG",
+      "priority": "MEDIUM",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "BUG",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "normal-bug",
+      "mode": "generative",
+      "category": "BUG",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "BUG",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "normal-feature",
+      "mode": "traditional",
+      "category": "FEATURE",
+      "priority": "LOW",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "FEATURE",
+      "expectedPriority": "LOW"
+    },
+    {
+      "id": "normal-feature",
+      "mode": "generative",
+      "category": "FEATURE",
+      "priority": "LOW",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "FEATURE",
+      "expectedPriority": "LOW"
+    },
+    {
+      "id": "normal-security",
+      "mode": "traditional",
+      "category": "SECURITY",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "normal-security",
+      "mode": "generative",
+      "category": "SECURITY",
+      "priority": "CRITICAL",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "critical-exposure",
+      "mode": "traditional",
+      "category": "SECURITY",
+      "priority": "CRITICAL",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "CRITICAL"
+    },
+    {
+      "id": "critical-exposure",
+      "mode": "generative",
+      "category": "SECURITY",
+      "priority": "CRITICAL",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "CRITICAL"
+    },
+    {
+      "id": "urgent-access",
+      "mode": "traditional",
+      "category": "BUG",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "ACCESS",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "urgent-access",
+      "mode": "generative",
+      "category": "ACCESS",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "ACCESS",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "ambiguous-app",
+      "mode": "traditional",
+      "category": "BUG",
+      "priority": "MEDIUM",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "BUG",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "ambiguous-app",
+      "mode": "generative",
+      "category": "ACCESS",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "BUG",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "ambiguous-page",
+      "mode": "traditional",
+      "category": "BUG",
+      "priority": "MEDIUM",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "BUG",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "ambiguous-page",
+      "mode": "generative",
+      "category": "BUG",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "BUG",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "ambiguous-login",
+      "mode": "traditional",
+      "category": "ACCESS",
+      "priority": "MEDIUM",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "ACCESS",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "ambiguous-login",
+      "mode": "generative",
+      "category": "ACCESS",
+      "priority": "MEDIUM",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "ACCESS",
+      "expectedPriority": "MEDIUM"
+    },
+    {
+      "id": "prompt-injection-security",
+      "mode": "traditional",
+      "category": "SECURITY",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "prompt-injection-security",
+      "mode": "generative",
+      "category": "SECURITY",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "prompt-injection-feature",
+      "mode": "traditional",
+      "category": "SECURITY",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "prompt-injection-feature",
+      "mode": "generative",
+      "category": "SECURITY",
+      "priority": "CRITICAL",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "feature-disguised-security",
+      "mode": "traditional",
+      "category": "SECURITY",
+      "priority": "HIGH",
+      "validFormat": true,
+      "correct": true,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    },
+    {
+      "id": "feature-disguised-security",
+      "mode": "generative",
+      "category": "SECURITY",
+      "priority": "CRITICAL",
+      "validFormat": true,
+      "correct": false,
+      "expectedCategory": "SECURITY",
+      "expectedPriority": "HIGH"
+    }
+  ],
+  "summary": [
+    {
+      "mode": "traditional",
+      "correct": 11,
+      "total": 12,
+      "accuracyPercent": 91.67
+    },
+    {
+      "mode": "generative",
+      "correct": 5,
+      "total": 12,
+      "accuracyPercent": 41.67
+    }
+  ]
+}

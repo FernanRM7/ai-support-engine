@@ -54,13 +54,13 @@ Con el servidor local funcionando y autenticado para AI:
 npm run compare
 ```
 
-El comparador consulta ambos modos sobre los mismos 12 casos definidos previamente en `tests/dataset.json`, valida el contrato y genera `evidence/comparison.json` (ignorado por Git para no publicar resultados no verificados). También imprime porcentaje de aciertos por motor. Define otra URL con `API_BASE_URL` si hace falta.
+El comparador consulta ambos modos sobre los mismos 12 casos definidos previamente en `tests/dataset.json`, valida el contrato y genera `evidence/comparison.json` con resultados observados, referencia y métricas. El resultado comprometido en `evidence/results.md` corresponde a una ejecución real del 12 de noviembre de 2026. También imprime porcentaje de aciertos por motor. Define otra URL con `API_BASE_URL` si hace falta.
 
 ## Límites y costos
 
 AI Gateway está disponible en todos los planes, pero no convierte la inferencia en ilimitada ni necesariamente gratuita. Workers Free permite 100.000 solicitudes de Worker por día y 10 ms de CPU por invocación. Workers AI publica una asignación gratuita de 10.000 Neurons diarios; al excederla, la documentación indica que hace falta Workers Paid. El costo y los límites dependen del modelo. Unified Billing usa créditos prepagados (con 5% de cargo al comprar créditos). Verifica la facturación del modelo y el Gateway en el dashboard antes de ejecutar lotes.
 
-La llamada a inferencia es una subrequest y la espera externa no consume CPU activa del Worker; límites de modelo y cuenta siguen aplicando. Consulta las fuentes oficiales enlazadas abajo.
+La inferencia usa un binding remoto (`remote: true`), incluso durante desarrollo local, así que consume cuota de Workers AI. La llamada es una subrequest y la espera externa no consume CPU activa del Worker; límites de modelo y cuenta siguen aplicando. El modelo configurado es `@cf/meta/llama-3.3-70b-instruct-fp8-fast`; comprueba su precio/cuota en el dashboard antes de ampliar la evaluación. Consulta las fuentes oficiales enlazadas abajo.
 
 ## Referencias oficiales
 
